@@ -4,20 +4,32 @@ import { useNavigate } from 'react-router-dom';
 export default function PersonalizarUm() {
   const navigate = useNavigate();
 
-  // Estados para guardar a escolha do usuário (começam como null = nada selecionado)
-  const [generoSelecionado, setGeneroSelecionado] = useState(null);
+  
+  const [generosSelecionados, setGenerosSelecionados] = useState([]);
   const [idiomaSelecionado, setIdiomaSelecionado] = useState(null);
 
   const generos = ['Fantasia', 'Romance', 'Terror', 'Outro...'];
   const idiomas = ['Português', 'Inglês', 'Espanhol'];
 
+  
+  const handleGeneroClick = (genero) => {
+    if (generosSelecionados.includes(genero)) {
+      
+      setGenerosSelecionados(generosSelecionados.filter((item) => item !== genero));
+    } else {
+      
+      setGenerosSelecionados([...generosSelecionados, genero]);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Só avança se o usuário tiver escolhido as duas opções
-    if (generoSelecionado && idiomaSelecionado) {
+    
+    
+    if (generosSelecionados.length > 0 && idiomaSelecionado) {
       navigate('/personalizar-2');
     } else {
-      alert('Por favor, selecione uma opção para cada pergunta antes de continuar!');
+      alert('Por favor, selecione pelo menos um gênero e uma opção de idioma antes de continuar!');
     }
   };
 
@@ -42,17 +54,18 @@ export default function PersonalizarUm() {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           
-          {/* Pergunta 1 */}
+          
           <fieldset className="space-y-3">
             <legend className="text-base md:text-lg font-bold text-black">1. Qual gênero literário você prefere?</legend>
             <div className="flex flex-wrap gap-3">
               {generos.map((genero) => {
-                const isSelected = generoSelecionado === genero;
+                
+                const isSelected = generosSelecionados.includes(genero);
                 return (
                   <button
                     key={genero}
                     type="button"
-                    onClick={() => setGeneroSelecionado(genero)}
+                    onClick={() => handleGeneroClick(genero)}
                     className={`font-bold px-5 py-2 rounded-full border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer ${
                       isSelected ? 'bg-[#00C853] text-white' : 'bg-[#CCCCCC] text-[#111111]'
                     }`}
@@ -64,7 +77,7 @@ export default function PersonalizarUm() {
             </div>
           </fieldset>
 
-          {/* Pergunta 2 */}
+          
           <fieldset className="space-y-3">
             <legend className="text-base md:text-lg font-bold text-black">2. Qual idioma você prefere para ler?</legend>
             <div className="flex flex-wrap gap-3">
@@ -101,3 +114,4 @@ export default function PersonalizarUm() {
     </main>
   );
 }
+
