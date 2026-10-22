@@ -87,7 +87,7 @@ export default function PersonalizarUm({ idiomaAtivo, setIdiomaGlobal }) {
             )}
           </fieldset>
 
-          {/* Pergunta 2 */}
+          
           <fieldset className="space-y-3">
             <legend className="text-base md:text-lg font-bold text-black">{t.q2}</legend>
             <div className="flex flex-wrap gap-3">
@@ -117,3 +117,4 @@ export default function PersonalizarUm({ idiomaAtivo, setIdiomaGlobal }) {
     </main>
   );
 }
+
